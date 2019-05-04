@@ -36,3 +36,30 @@ public class Task30DaysTriggerHandler {
         }
     }
 }
+
+/*
+
+  public void OnAfterInsert(Task[] newRecords){
+
+  }
+
+  public void OnBeforeInsert(Task[] newRecords){
+
+  }
+
+  public void OnBeforeUpdate(Task[] oldRecords, Task[] updatedRecords, Map<ID, Task> recordMap){
+   
+  }
+
+  public void OnBeforeDelete(Task[] recordsToDelete, Map<ID, Task> recordMap){
+
+  }
+
+  public void OnAfterDelete(Task[] deletedRecords, Map<ID, Task> recordMap){
+
+  }
+
+  public void OnUndelete(Task[] restoredRecords){
+
+  }
+  */
