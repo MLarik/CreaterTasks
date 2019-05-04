@@ -1,17 +1,19 @@
 public class Task90DaysHandler {
-    public void OnAfterUpdate(Contact[] newRecords, Contact[] oldContacts) {
+    public void OnAfterUpdate(Contact[] newContacts, Map<ID, Contact> oldContacts) {
         List<Task> newTasks = new List<Task>();
     
-        for (Contact cont : newRecords) {
-            if (cont.In_3__c == True && cont.Account.Name == 'Households' && cont.In_3__c == true
-                && newRecords.Retirement_Account_Linked__c == false) {
+        for (Contact cont : newContacts) {
+            Contact oldCont = oldContacts.get(cont.Id);
+            
+            if (cont.In_3__c == true && cont.Account.Name == 'Households'
+                && oldCont.In_3__c == false) {
                 Date newDate = date.today().addDays(90);
                 
                 newTasks.add(new Task(
-                    ActivityDate = newDate, 
+                    ActivityDate = newDate,
                     Reminder__c = newDate,
                     WhoId = cont.Id));
-            }
+             }
         }
     
         if(newTasks.size() > 0) {
@@ -19,7 +21,22 @@ public class Task90DaysHandler {
         }
     }
     
-    public void OnAfterInsert(Contact[] newRecords) {
-        
+    public void OnAfterInsert(Contact[] newContacts) {
+        List<Task> newTasks = new List<Task>();
+    
+        for (Contact cont : newContacts) {
+            if (cont.In_3__c == true && cont.Account.Name == 'Households') {
+                Date newDate = date.today().addDays(90);
+                
+                newTasks.add(new Task(
+                    ActivityDate = newDate, 
+                    Reminder__c = newDate,
+                    WhoId = cont.Id));
+             }
+        }
+    
+        if(newTasks.size() > 0) {
+            insert newTasks;
+        }
     }
 }
