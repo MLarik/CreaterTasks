@@ -1,20 +1,20 @@
 trigger Task90DaysTrigger on Contact (after delete, after insert, after undelete,
 after update, before delete, before insert, before update) {
     List<Contact> newContacts = [SELECT Id, In_3__c, Account.Name FROM Contact WHERE Id IN :Trigger.New];
-    List<Contact> oldContacts = [SELECT Id, In_3__c, Account.Name FROM Contact WHERE Id IN :Trigger.Old];    
-    Task90DaysHandler handler = new ContactTriggerHandler();
+    
+    Task90DaysHandler handler = new Task90DaysHandler();
     //if(Trigger.isInsert && Trigger.isBefore){
-    //  handler.OnBeforeInsert(newContacts);
+    //  handler.OnBeforeInsert(Trigger.New);
     //}
     if(Trigger.isInsert && Trigger.isAfter){
         handler.OnAfterInsert(newContacts);
     }
 
     //else if(Trigger.isUpdate && Trigger.isBefore){
-    //  handler.OnBeforeUpdate(Trigger.old, newContacts, oldContacts);
+    //  handler.OnBeforeUpdate(Trigger.old, Trigger.New, oldContacts);
     //}
     if(Trigger.isUpdate && Trigger.isAfter){
-        handler.OnAfterUpdate(newContacts, oldContacts);
+        handler.OnAfterUpdate(newContacts, Trigger.OldMap);
     }
 
     //else if(Trigger.isDelete && Trigger.isBefore){
@@ -24,6 +24,6 @@ after update, before delete, before insert, before update) {
     //  handler.OnAfterDelete(Trigger.old, oldContacts);
     //}
     //else if(Trigger.isUnDelete){
-    //  handler.OnUndelete(newContacts);
+    //  handler.OnUndelete(Trigger.New);
     //}
 }
