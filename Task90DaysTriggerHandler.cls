@@ -24,7 +24,7 @@ public class Task90DaysTriggerHandler {
         CreateTasks(contacts);
     }
 
-    public void CreateTasks(List<Contact> contacts) {
+    private void CreateTasks(List<Contact> contacts) {
         Date newDate = date.today().addDays(90);
         List<Task> newTasks = new List<Task>();
 
